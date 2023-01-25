@@ -85,15 +85,6 @@ function renderLettuce() {
   }
 }
 
-// function renderButtons() {
-//   let buttons = document.getElementsByClassName("button");
-//   if (state=true) {
-//     buttons.style.backgroundcolor = "#ffd058"
-//   } else {
-//     buttons.style.backgroundcolor = "blue"
-//   }
-// }
-
 // Trial 2 - Setup event listener for the patty button
 document.querySelector(".btn-patty").onclick = function () {
   state.Patty = !state.Patty;
@@ -126,11 +117,34 @@ document.querySelector(".btn-lettuce").onclick = function () {
 };
 
 //Challenge 1 - Add/Remove the class active to the buttons based on state
-
+function renderButtons() {
+  document.querySelectorAll(".button").forEach((ele) => {
+    if (state[ele.textContent]){
+      ele.classList.add("active")
+    }
+  else {
+    ele.classList.remove("active")
+ }
+});
+}
 
 //Challenge 2 - Render only the items selected in the ingredients board based on the state
-
+ var menuList = document.querySelectorAll(".items")
+ function renderIngredientsBoard(){
+  menuList.forEach(i => {
+    state[i.textContent] ? i.style.display = "inherit" : i.style.display = "none"
+  });
+ }
 
 //Judgement 1
 //In the p element having price-details as the class, display the calculated
 //price based on ingredients
+function renderPrice() {
+  let sum = 0;
+  Object.keys(state).forEach(item => {
+    if(state[item]){
+      sum += ingredients[item];
+    }
+  });
+  document.querySelector(".price-details").innerHTML = `INR ${sum}`
+}
